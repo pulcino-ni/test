@@ -1,0 +1,524 @@
+/* 警告メッセージは最初は表示 */
+.warning-message {
+  z-index:8;
+  display: block;
+  text-align: center;
+  font-size: 5.2vw;
+  background-color: #486680;
+  color: white;
+  padding: 20px;
+  border: 1px solid #1b2aac;
+}
+
+/* サイトコンテンツは最初は表示されない */
+.site-content {
+  display: none;
+}
+
+/* 画面サイズが1400×750以上の場合、サイトコンテンツを表示 */
+@media (min-width: 1400px) and (min-height: 750px) {
+  .warning-message {
+    display: none;
+  }
+
+  .site-content {
+    display: block;
+  }
+}
+
+/* 画面サイズが1400×750未満の場合、警告メッセージを表示 */
+@media (max-width: 1399px), (max-height: 749px) {
+  .warning-message {
+    display: block;
+  }
+
+  .site-content {
+    display: none;
+  }
+}
+
+
+body{
+  overflow: hidden; /* 要素内のスクロールを無効化 */
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 17.1vw;
+  height: 1.25vh;
+  border-radius: 20px;
+  color: #ffffff;
+  border: 0.14vw solid;
+  position: relative;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform : translate(-50%,-50%);
+  transform : translate(-50%,-50%);
+  animation: loader-fade-out 3.8s forwards;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  margin: 0.14vw;
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 3s infinite;
+}
+
+/* ロードバーのアニメーション */
+@keyframes l6 {
+    100% {inset:0}
+}
+/* フェードアウトのアニメーション */
+@keyframes loader-fade-out {
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+/* 背景がグラデーションするアニメーション */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #404ee6,#4fa1ad,#c2ddfb,#ff9fb9);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+}
+
+/* グラデーションアニメーション */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 四角形の背景 */
+body::before {
+  content: "";
+  position: absolute;
+  top: 5vh;
+  left: 4vw;
+  width: 92vw;
+  height: 90vh;
+  background-color: rgba(255, 255, 255, 0.5); /* 半透明の白 */
+  z-index: 1; /* グラデーションの上、コンテンツの下 */
+  border-radius: 10px; /* 角を丸める（オプション） */
+  box-shadow: 0 0.27vw 1.03vw rgba(30, 30, 30, 0.2); /* 軽い影を追加 */
+  opacity: 0; /* 初期状態で非表示 */
+  visibility: hidden; /* 非表示設定 */
+  animation: fade-in 1s ease forwards;
+  animation-delay: 3s; /* ローダーの終了タイミングに合わせる */
+}
+
+/* 四角形のフェードインアニメーション */
+@keyframes fade-in {
+  0% { opacity: 0; visibility: hidden; }
+  100% { opacity: 1; visibility: visible; }
+}
+
+/* 枠線を追加 */
+body::after {
+  content: "";
+  position: absolute;
+  top: 50%; /* 画面中央 */
+  left: 50%; /* 画面中央 */
+  width: 95vw; /* 背景の四角形より少し小さく */
+  height: 95vh;
+  border: 0.14vw solid rgb(255, 255, 255); /* 枠線の色と太さ */
+  border-radius: 10px; /* 角を丸める（背景と一致させる） */
+  z-index: 2; /* 白い四角形の上 */
+  opacity: 0; /* 初期状態で非表示 */
+  visibility: hidden; /* 非表示設定 */
+  transform: translate(-50%, -50%); /* 中央に移動 */
+  animation: fade-in 1s ease forwards;
+  animation-delay: 3s; /* 背景と同期 */
+}
+
+/* 決め台詞 */
+.catchphrase {
+  font-family: "Kaisei Tokumin", serif;
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 0.1vw rgb(13, 41, 117); /* 縁取りの太さと色 */
+  z-index: 10;
+  position: absolute; /* 絶対位置で調整 */
+  top: 8vh; /* 白い四角の上からの距離を指定 */
+  left: 12vw; /* 白い四角の左からの距離を指定 */
+  text-align: left; /* 左揃え */
+}
+.catchphrase p {
+  font-size: 4.5vw; /* フォントサイズを大きく設定 */
+  line-height: 0.3; /* 行間を狭く設定 */
+  letter-spacing: 0.1em; /* 文字間の調整 */
+  opacity: 0;
+  transform: translateY(6.83vh);
+  animation: slide-up-cute 1s ease-out forwards;
+}
+.catchphrase p:nth-child(1) {
+  animation-delay: 4.2s;
+}
+.catchphrase p:nth-child(2) {
+  animation-delay: 4.5s;
+}
+
+.catchphrase2 {
+  font-family: "Kaisei Tokumin", serif;
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 0.21vw rgba(255, 255, 255, 0.75); /* 縁取りの太さと色 */
+  filter: blur(1px);
+  z-index: 9;
+  position: absolute; /* 絶対位置で調整 */
+  top: 8.3vh; /* 白い四角の上からの距離を指定 */
+  left: 12.3vw; /* 白い四角の左からの距離を指定 */
+  text-align: left; /* 左揃え */
+}
+.catchphrase2 p {
+  font-size: 4.5vw; /* フォントサイズを大きく設定 */
+  line-height: 0.3; /* 行間を狭く設定 */
+  letter-spacing: 0.1em; /* 文字間の調整 */
+  opacity: 0;
+  transform: translateY(6.83vh);
+  animation: slide-up-cute 1s ease-out forwards;
+}
+.catchphrase2 p:nth-child(1) {
+  animation-delay: 4.2s;
+}
+.catchphrase2 p:nth-child(2) {
+  animation-delay: 4.5s;
+}
+
+/* 下からかわいく登場するアニメーション */
+@keyframes slide-up-cute {
+  0% {
+    transform: translateY(6.83vh);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-0.68vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.keyvisual{
+  width: 45vw;
+  height:auto;
+  z-index: 10;
+  position: absolute; /* 絶対位置で調整 */
+  top: 5vh; /* 白い四角の上からの距離を指定 */
+  left: 55vw; /* 白い四角の左からの距離を指定 */
+  opacity: 0; /* 初期状態は透明 */
+  transform: translateY(1.37vh); /* 少し下から登場させる */
+  animation: keyvisual-fade-in 1.5s ease forwards; /* フェードインアニメーション */
+  animation-delay: 4.5s; /* テキストアニメーション後に表示 */
+}
+
+/* vh, vw を使用して調整した CSS */
+
+.keyvisual::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.5vh; /* 下線の太さ */
+  background: yellow; /* 下線の色 */
+  z-index: -1; /* テキストの背後に表示 */
+}
+
+/* 立ち絵フェードインアニメーション */
+@keyframes keyvisual-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(2vh); /* 下から少し移動 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* 元の位置に */
+  }
+}
+
+.keyvisual2 {
+  width: 45vw;
+  height:auto;
+  filter: brightness(0) invert(1); /* 画像を白くする */
+  z-index: 9;
+  position: absolute; /* 絶対位置で調整 */
+  top: 5.5vh; /* 白い四角の上からの距離を指定 */
+  left: 55.5vw; /* 白い四角の左からの距離を指定 */
+  opacity: 0; /* 初期状態は透明 */
+  transform: translateY(2vh); /* 少し下から登場させる */
+  animation: keyvisual-fade-in 1.5s ease forwards; /* フェードインアニメーション */
+  animation-delay: 4.7s; /* テキストアニメーション後に表示 */
+}
+
+/* パーティクルのコンテナ */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1; /* 背景に配置 */
+}
+
+/* 各パーティクル */
+.particle {
+  position: absolute;
+  z-index: 1;
+  width: 2.05vw; /* パーティクルの幅 */
+  height: 2.05vw; /* パーティクルの高さ */
+  background: rgba(255, 255, 255, 0.8); /* パーティクルの色 */
+  border-radius: 50%; /* 丸い形状 */
+  animation: move 10s linear infinite;
+  opacity: 0;
+}
+
+/* パーティクルのランダムな初期位置 */
+.particle:nth-child(1) { top: 80vh; left: 10vw; animation-delay: 0s; }
+.particle:nth-child(2) { top: 50vh; left: 20vw; animation-delay: 2s; }
+.particle:nth-child(3) { top: 80vh; left: 30vw; animation-delay: 4s; }
+.particle:nth-child(4) { top: 70vh; left: 40vw; animation-delay: 6s; }
+.particle:nth-child(5) { top: 90vh; left: 50vw; animation-delay: 8s; }
+.particle:nth-child(6) { top: 60vh; left: 60vw; animation-delay: 10s; }
+.particle:nth-child(7) { top: 90vh; left: 70vw; animation-delay: 12s; }
+.particle:nth-child(8) { top: 50vh; left: 80vw; animation-delay: 14s; }
+
+/* パーティクルの動き */
+@keyframes move {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.5); /* 上方向に移動しながら小さくなる */
+    opacity: 0;
+  }
+}
+
+/* 紹介文 */
+.introduction {
+  z-index: 10;
+  font-size:2.4vh;
+  position: absolute; /* 絶対位置で調整 */
+  top: 37vh; /* 白い四角の上からの距離を指定 */
+  left: 12vw; /* 白い四角の左からの距離を指定 */
+  opacity: 0; /* 初期状態は透明 */
+  transform: translateY(4vh); /* 少し下から登場させる */
+  animation: keyvisual-fade-in 1.5s ease forwards; /* フェードインアニメーション */
+  animation-delay: 4.5s; /* テキストアニメーション後に表示 */
+}
+
+/* PL紹介ラベル */
+.label {
+  z-index: 11;
+  width: 27.3vw;
+  height: 7vh;
+  background-color: #f7e341;
+  position: absolute;
+  border-radius: 0.34vw; /* 角を丸める（オプション） */
+  bottom: 8.7vh; /* 下からの距離 */
+  right: 0vw; /* 初期状態で画面の右外に配置 */
+  opacity: 0; /* 初期状態は透明 */
+  animation: slide-in-fade 2s ease forwards;
+  animation-delay: 4.5s; /* テキストアニメーション後に表示 */
+}
+
+@keyframes slide-in-fade {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0; /* 透明 */
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1; /* 不透明 */
+  }
+}
+
+/* PL紹介ラベル */
+.PLname {
+  font-family: "Zen Maru Gothic", serif;
+  font-weight: 500;
+  font-size: 4.5vh;
+  z-index: 11;
+  position: absolute;
+  bottom: 8.9vh; /* 下からの距離 */
+  right: 6.2vw; /* 初期状態で画面の右外に配置 */
+  opacity: 0; /* 初期状態は透明 */
+  animation: slide-in-fade 2s ease forwards;
+  animation-delay: 4.5s; /* テキストアニメーション後に表示 */
+}
+
+/* ボタン */
+.button-container {
+  z-index: 15;
+  display: flex;
+  gap: 1.37vw; /* ボタン間のスペースをvwに変更 */
+  justify-content: center; /* ボタンを中央揃え */
+  opacity: 0; /* 初期状態は透明 */
+  position: absolute; /* 絶対位置で調整 */
+  bottom: 12%; /* 白い四角の上からの距離をvhに設定 */
+  left: 5%; /* 白い四角の左からの距離をvwに設定 */
+  animation: keyvisual-fade-in 1s ease forwards;
+  animation-delay: 4.5s; /* 背景と同期 */
+}
+
+.profile {
+  display: inline-block;
+  text-decoration: none; /* 下線を消す */
+  width: 13.66vw; /* ボタンの幅をvwに変更 */
+  height: 8.78vh; /* ボタンの高さをvhに変更 */
+  padding: 0; /* 内側の余白をリセット */
+  font-size: 1.23vw; /* フォントサイズをvwに変更 */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: white; /* テキストの色 */
+  background:
+    linear-gradient(rgba(96, 140, 198, 0.5), rgba(96, 140, 198, 0.5)), /* 色のオーバーレイ */
+    url('images/可愛い顔.png'); /* 画像のパス */
+  background-size: cover;
+  background-position: center;
+  border: 0.14vw solid #ffffff;
+  border-radius: 0.55vw;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-shadow: 0.14vw 0.14vw 0.27vw rgba(0, 0, 0, 0.5);
+}
+
+/* sessions */
+.sessions {
+  display: inline-block;
+  text-decoration: none;
+  width: 13.66vw;
+  height: 8.78vh;
+  padding: 0;
+  font-size: 1.23vw;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: white;
+  background:
+    linear-gradient(rgba(96, 140, 198, 0.5), rgba(96, 140, 198, 0.5)),
+    url('images/夜明け.png'); /* 画像のパス */
+  background-size: cover;
+  background-position: center;
+  border: 0.14vw solid #ffffff;
+  border-radius: 0.55vw;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-shadow: 0.14vw 0.14vw 0.27vw rgba(0, 0, 0, 0.5);
+}
+
+/* comment */
+.comment {
+  display: inline-block;
+  text-decoration: none;
+  width: 13.66vw;
+  height: 8.78vh;
+  padding: 0;
+  font-size: 1.23vw;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: white;
+  background:
+    linear-gradient(rgba(96, 140, 198, 0.5), rgba(96, 140, 198, 0.5)),
+    url('images/誕生日2023.jpeg'); /* 画像のパス */
+  background-size: cover;
+  background-position: center;
+  border: 0.14vw solid #ffffff;
+  border-radius: 0.55vw;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-shadow: 0.14vw 0.14vw 0.27vw rgba(0, 0, 0, 0.5);
+}
+
+/* goods */
+.goods {
+  display: inline-block;
+  text-decoration: none;
+  width: 13.66vw;
+  height: 8.78vh;
+  padding: 0;
+  font-size: 1.23vw;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: white;
+  background:
+    linear-gradient(rgba(96, 140, 198, 0.5), rgba(96, 140, 198, 0.5)),
+    url('images/バレンタイン2024.png'); /* 画像のパス */
+  background-size: cover;
+  background-position: center;
+  border: 0.14vw solid #ffffff;
+  border-radius: 0.55vw;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-shadow: 0.14vw 0.14vw 0.27vw rgba(0, 0, 0, 0.5);
+}
+
+/* ボタンの文字色を白色に変更 */
+.button-character{
+  color: white;
+}
+
+/* ホバー時とアクティブ時のエフェクトは共通 */
+.profile:hover,
+.sessions:hover,
+.comment:hover,
+.goods:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.profile:active,
+.sessions:active,
+.comment:active,
+.goods:active {
+  background-color: #004080;
+  transform: scale(0.95);
+}
+
+/* 名前 */
+.name {
+  position: absolute;
+  left: 10vw; /* 100pxをvwに変換 */
+  top: 55vh; /* 50pxをvhに変換 */
+  font-size: 15vh; /* 120pxをvhに変換 */
+  color: transparent;
+  -webkit-text-stroke: 0.15vh rgba(0, 0, 0, 0.8); /* 2.2pxをvhに変換 */
+  z-index: 14;
+  font-family: "Shippori Mincho B1", serif;
+  font-weight: 700;
+  font-style: normal;
+  animation: keyvisual-fade-in 1s ease forwards;
+  opacity: 0;
+  animation-delay: 4.5s;
+}
+.ruby {
+  position: absolute;
+  left: 20.39vw; /* 240pxをvwに変換 */
+  top: 73.09vh; /* 200pxをvhに変換 */
+  font-size: 3.76vh; /* 30pxをvhに変換 */
+  z-index: 14;
+  font-family: "Shippori Mincho B1", serif;
+  font-weight: 400;
+  font-style: normal;
+  animation: keyvisual-fade-in 1s ease forwards; /* フェードインアニメーション */
+  opacity: 0;
+  animation-delay: 4.7s;
+}
